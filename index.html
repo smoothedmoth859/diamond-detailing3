@@ -34,7 +34,12 @@
                 <li><a href="#team">Team</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
-            <a href="#contact" class="btn btn-primary">Termin anfragen</a>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="#contact" class="btn btn-primary nav-cta">Termin anfragen</a>
         </div>
     </nav>
 
@@ -202,8 +207,8 @@
                     </div>
                     <div class="team-info">
                         <h3>Emre</h3>
-                        <span class="team-role">Eingestellt aus Mitleid</span>
-                        <p>Trotz der speziellen Einstellungshintergründe gibt Emre alles beim Lackschutz und sorgt für den finalen "Diamond Glow".</p>
+                        <span class="team-role">Diamond Detailing Crew</span>
+                        <p>--eingestellt aus mitleid</p>
                         <div class="skill-tags">
                             <span class="skill-tag">Lackschutz</span>
                             <span class="skill-tag">Finish</span>
@@ -231,6 +236,60 @@
                             <span class="skill-tag">Qualität</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Emil -->
+                <div class="team-card reveal">
+                    <div class="window-frame team-image-wrap">
+                        <div class="window-header">
+                            <div class="window-dot dot-red"></div>
+                            <div class="window-dot dot-yellow"></div>
+                            <div class="window-dot dot-green"></div>
+                            <div class="window-title">IMG_EML</div>
+                        </div>
+                        <img src="team_5.jpg" alt="Emil" class="team-img" style="object-position: center top;">
+                    </div>
+                    <div class="team-info">
+                        <h3>Emil</h3>
+                        <span class="team-role">Diamond Specialist</span>
+                        <p>Als unser Specialist für komplexe Herausforderungen bewahrt Emil immer einen kühlen Kopf – egal wie hart der Job ist.</p>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Specialist</span>
+                            <span class="skill-tag">Fokus</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESULTS / COMPARISON -->
+    <section class="results" id="results">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">TRANSFORMATION // DATA_RECOVERY</span>
+                <h2>Vorher & <span class="text-gradient">Nachher</span></h2>
+            </div>
+
+            <div class="window-frame comparison-container reveal">
+                <div class="window-header">
+                    <div class="window-dot dot-red"></div>
+                    <div class="window-dot dot-yellow"></div>
+                    <div class="window-dot dot-green"></div>
+                    <div class="window-title">TRANSFORMATION_ANALYSIS</div>
+                </div>
+                <div class="comparison-slider">
+                    <div class="img-before">
+                        <img src="before.jpg" alt="Vorher">
+                        <div class="label label-before">VORHER</div>
+                    </div>
+                    <div class="img-after">
+                        <img src="after.jpg" alt="Nachher">
+                        <div class="label label-after">NACHHER</div>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="comparisonSlider">
+                    <div class="slider-line"></div>
+                    <div class="slider-button"><i class="fa-solid fa-left-right"></i></div>
                 </div>
             </div>
         </div>

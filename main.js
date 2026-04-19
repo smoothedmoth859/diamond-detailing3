@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Mobile Menu Toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        });
+    }
+
     // Navigation Scroll Effect
     const nav = document.getElementById('mainNav');
     window.addEventListener('scroll', () => {
@@ -60,6 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.querySelector('.transition-overlay');
 
     function triggerTransition(targetId) {
+        // Close mobile menu if open
+        navLinks.classList.remove('active');
+        if (mobileToggle) mobileToggle.classList.remove('active');
+
         overlay.classList.add('active');
         
         setTimeout(() => {
@@ -88,6 +103,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
+    // Interactive 3D Tilt for Team Cards
+    const teamCards = document.querySelectorAll('.team-card');
+    
+    teamCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateY = ((x - centerX) / centerX) * 10; // Max 10deg
+            const rotateX = ((centerY - y) / centerY) * 10; // Max 10deg
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+    });
+
+    // Before/After Slider Logic
+    const slider = document.getElementById('comparisonSlider');
+    const imgAfterContainer = document.querySelector('.img-after');
+    const sliderLine = document.querySelector('.slider-line');
+    const sliderButton = document.querySelector('.slider-button');
+    const sliderParent = document.querySelector('.comparison-container');
+
+    if (slider) {
+        const updateSliderWidth = () => {
+            const containerWidth = sliderParent.offsetWidth;
+            const afterImg = imgAfterContainer.querySelector('img');
+            if (afterImg) afterImg.style.width = containerWidth + 'px';
+        };
+
+        window.addEventListener('resize', updateSliderWidth);
+        updateSliderWidth(); // Initial set
+
+        slider.addEventListener('input', (e) => {
+            const value = e.target.value;
+            imgAfterContainer.style.width = `${value}%`;
+            sliderLine.style.left = `${value}%`;
+            sliderButton.style.left = `${value}%`;
+        });
+    }
+
     // Log System Status
     console.log('%c DIAMOND DETAILING v3.0 | SYSTEM OPERATIONAL ', 'background: #22d3ee; color: #000; font-weight: bold;');
 });
