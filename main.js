@@ -1,104 +1,93 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Navigation Scroll Effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
 
-    // 1. Navbar scroll effect
-    const navbar = document.getElementById('navbar');
-    const onScroll = () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 60);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    // 2. Reveal on scroll (Intersection Observer)
-    const revealEls = document.querySelectorAll('.reveal');
+    // Reveal Animations on Scroll
+    const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                revealObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, {
+        threshold: 0.1
+    });
 
-    revealEls.forEach((el, i) => {
-        el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+    revealElements.forEach(el => {
         revealObserver.observe(el);
     });
 
-    // 3. Mobile menu toggle
-    const menuBtn = document.getElementById('mobile-menu-btn');
-    const navMenu = document.getElementById('nav-menu');
+    // Form Handling with Cyber Theme
+    const bookingForm = document.getElementById('bookingForm');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = bookingForm.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            // Artificial "Processing" feel
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> LINKING...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
 
-    menuBtn?.addEventListener('click', () => {
-        const isOpen = menuBtn.classList.toggle('active');
-        navMenu.classList.toggle('active', isOpen);
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-
-    navMenu?.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            menuBtn.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> UPLOAD_COMPLETE';
+                btn.style.background = 'var(--green)';
+                btn.style.color = '#000';
+                
+                setTimeout(() => {
+                    alert('Anfrage erfolgreich gesendet! Wir melden uns in Kürze.');
+                    bookingForm.reset();
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                }, 2000);
+            }, 1500);
         });
-    });
-
-    // 4. Booking form
-    const form = document.getElementById('booking-form');
-    const formMsg = document.getElementById('form-msg');
-
-    form?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const btn = form.querySelector('#submit-btn');
-        const original = btn.textContent;
-
-        btn.textContent = 'Wird gesendet…';
-        btn.disabled = true;
-
-        setTimeout(() => {
-            btn.textContent = original;
-            btn.disabled = false;
-            form.reset();
-            formMsg.style.display = 'block';
-            formMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => { formMsg.style.display = 'none'; }, 6000);
-        }, 1600);
-    });
-
-    // 5. Modal: close on overlay click or ESC
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.addEventListener('click', e => {
-            if (e.target === modal) window.location.hash = '';
-        });
-    });
-
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') window.location.hash = '';
-    });
-
-    // 6. Hero image parallax (subtle)
-    const heroImg = document.querySelector('.hero-img');
-    if (heroImg) {
-        window.addEventListener('scroll', () => {
-            const shift = window.scrollY * 0.25;
-            heroImg.style.transform = `scale(1.04) translateY(${shift}px)`;
-        }, { passive: true });
     }
 
-    // 7. Smooth active nav link highlight
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    // Cyber Segment Transition
+    const overlay = document.querySelector('.transition-overlay');
 
-    const activeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                navLinks.forEach(link => {
-                    link.style.color = link.getAttribute('href') === `#${entry.target.id}`
-                        ? 'var(--gold)'
-                        : '';
+    function triggerTransition(targetId) {
+        overlay.classList.add('active');
+        
+        setTimeout(() => {
+            const target = document.querySelector(targetId);
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 70,
+                    behavior: 'instant'
                 });
             }
-        });
-    }, { threshold: 0.4 });
+            
+            setTimeout(() => {
+                overlay.classList.remove('active');
+            }, 300);
+        }, 600);
+    }
 
-    sections.forEach(s => activeObserver.observe(s));
+    // Smooth Scrolling for Nav Links with Transition
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            triggerTransition(targetId);
+        });
+    });
+    
+    // Log System Status
+    console.log('%c DIAMOND DETAILING v3.0 | SYSTEM OPERATIONAL ', 'background: #22d3ee; color: #000; font-weight: bold;');
 });
