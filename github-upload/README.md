@@ -2,15 +2,7 @@
 
 Professionelle Fahrzeugaufbereitung im Herzen des Ruhrgebiets.
 
-**Live-Website:** [https://smoothedmoth859.github.io/diamond-detailing3/](https://smoothedmoth859.github.io/diamond-detailing3/)
-
----
-
-## 📱 QR-Code für die Präsentation
-
-![QR Code](qrcode.png)
-
-Scan diesen Code, um direkt zur Webseite zu gelangen.
+**Live-Website:** [GitHub Pages Link einfügen]
 
 ---
 

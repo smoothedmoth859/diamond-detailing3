@@ -50,24 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
             setTimeout(() => {
-                // Save Order to LocalStorage
-                const name = bookingForm.querySelector('input[type="text"]').value;
-                const model = bookingForm.querySelectorAll('input[type="text"]')[1].value;
-                const service = bookingForm.querySelector('select').value;
-                const message = bookingForm.querySelector('textarea').value;
-                const date = new Date().toLocaleString('de-DE');
-
-                const newOrder = { name, model, service, message, date };
-                const orders = JSON.parse(localStorage.getItem('dd_orders') || '[]');
-                orders.push(newOrder);
-                localStorage.setItem('dd_orders', JSON.stringify(orders));
-
                 btn.innerHTML = '<i class="fa-solid fa-check"></i> UPLOAD_COMPLETE';
                 btn.style.background = 'var(--green)';
                 btn.style.color = '#000';
                 
                 setTimeout(() => {
-                    alert('Anfrage gespeichert! Du findest sie im Admin-Bereich.');
+                    alert('Anfrage erfolgreich gesendet! Wir melden uns in Kürze.');
                     bookingForm.reset();
                     btn.innerHTML = originalText;
                     btn.style.background = '';
@@ -138,52 +126,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Before/After Slider Logic (Multiple Support)
-    const sliderContainers = document.querySelectorAll('.comparison-container');
-    
-    sliderContainers.forEach(container => {
-        const slider = container.querySelector('.slider');
-        const imgAfterContainer = container.querySelector('.img-after');
-        const sliderLine = container.querySelector('.slider-line');
-        const sliderButton = container.querySelector('.slider-button');
-        const afterImg = imgAfterContainer.querySelector('img');
+    // Before/After Slider Logic
+    const slider = document.getElementById('comparisonSlider');
+    const imgAfterContainer = document.querySelector('.img-after');
+    const sliderLine = document.querySelector('.slider-line');
+    const sliderButton = document.querySelector('.slider-button');
+    const sliderParent = document.querySelector('.comparison-container');
 
-        if (slider) {
-            const updateSliderWidth = () => {
-                const containerWidth = container.offsetWidth;
-                if (afterImg) afterImg.style.width = containerWidth + 'px';
-            };
+    if (slider) {
+        const updateSliderWidth = () => {
+            const containerWidth = sliderParent.offsetWidth;
+            const afterImg = imgAfterContainer.querySelector('img');
+            if (afterImg) afterImg.style.width = containerWidth + 'px';
+        };
 
-            window.addEventListener('resize', updateSliderWidth);
-            // Small delay to ensure container width is calculated correctly after layout
-            setTimeout(updateSliderWidth, 100);
+        window.addEventListener('resize', updateSliderWidth);
+        updateSliderWidth(); // Initial set
 
-            slider.addEventListener('input', (e) => {
-                const value = e.target.value;
-                imgAfterContainer.style.width = `${value}%`;
-                sliderLine.style.left = `${value}%`;
-                sliderButton.style.left = `${value}%`;
-            });
-        }
-    });
+        slider.addEventListener('input', (e) => {
+            const value = e.target.value;
+            imgAfterContainer.style.width = `${value}%`;
+            sliderLine.style.left = `${value}%`;
+            sliderButton.style.left = `${value}%`;
+        });
+    }
 
     // Log System Status
     console.log('%c DIAMOND DETAILING v3.0 | SYSTEM OPERATIONAL ', 'background: #22d3ee; color: #000; font-weight: bold;');
-
-    // Cookie Banner Logic
-    const cookieBanner = document.getElementById('cookieBanner');
-    const acceptCookies = document.getElementById('acceptCookies');
-
-    if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
-        setTimeout(() => {
-            cookieBanner.classList.add('active');
-        }, 2000);
-    }
-
-    if (acceptCookies) {
-        acceptCookies.addEventListener('click', () => {
-            localStorage.setItem('cookiesAccepted', 'true');
-            cookieBanner.classList.remove('active');
-        });
-    }
 });

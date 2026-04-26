@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Diamond Detailing</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-panel { padding-top: 120px; }
+        .order-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+        .order-table th, .order-table td { text-align: left; padding: 1rem; border-bottom: 1px solid var(--border); }
+        .order-table th { color: var(--cyan); font-family: 'Space Mono', monospace; font-size: 0.8rem; }
+        .status-pill { padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; background: rgba(34, 211, 238, 0.1); color: var(--cyan); border: 1px solid var(--cyan); }
+        .empty-state { text-align: center; padding: 4rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div class="bg-waves"><div class="wave-pattern"></div></div>
+
+    <nav id="mainNav" class="scrolled">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-text">
+                    <span class="logo-main">DIAMOND</span>
+                    <span class="logo-sub">ADMIN_CENTER</span>
+                </div>
+            </a>
+            <button onclick="clearOrders()" class="btn btn-outline btn-sm">Daten löschen</button>
+        </div>
+    </nav>
+
+    <section class="admin-panel">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">SYSTEM // ORDER_MANAGEMENT</span>
+                <h2>Eingegangene <span class="text-gradient">Anfragen</span></h2>
+            </div>
+
+            <div class="window-frame">
+                <div class="window-header">
+                    <div class="window-dot dot-red"></div>
+                    <div class="window-dot dot-yellow"></div>
+                    <div class="window-dot dot-green"></div>
+                    <div class="window-title">DATABASE_v3.0</div>
+                </div>
+                <div id="orderList">
+                    <!-- Orders will be injected here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function loadOrders() {
+            const orderList = document.getElementById('orderList');
+            const orders = JSON.parse(localStorage.getItem('dd_orders') || '[]');
+
+            if (orders.length === 0) {
+                orderList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-inbox fa-3x" style="margin-bottom: 1rem; opacity: 0.3;"></i><p>Keine Anfragen vorhanden.</p></div>';
+                return;
+            }
+
+            let html = '<table class="order-table"><thead><tr><th>DATUM</th><th>NAME</th><th>MODELL</th><th>SERVICE</th><th>NACHRICHT</th></tr></thead><tbody>';
+            
+            orders.reverse().forEach(order => {
+                html += `<tr>
+                    <td class="mono" style="font-size: 0.7rem;">${order.date}</td>
+                    <td><strong>${order.name}</strong></td>
+                    <td><span class="status-pill">${order.model}</span></td>
+                    <td>${order.service}</td>
+                    <td style="font-size: 0.85rem; color: var(--text-muted);">${order.message || '-'}</td>
+                </tr>`;
+            });
+
+            html += '</tbody></table>';
+            orderList.innerHTML = html;
+        }
+
+        function clearOrders() {
+            if (confirm('Alle Anfragen unwiderruflich löschen?')) {
+                localStorage.removeItem('dd_orders');
+                loadOrders();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadOrders);
+    </script>
+</body>
+</html>
