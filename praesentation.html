@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diamond Detailing – Schulpräsentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --bg:#050508; --text:#fff; --muted:#94a3b8;
+    --card:rgba(255,255,255,0.03); --border:rgba(255,255,255,0.07);
+    --tom:#22d3ee; --bryan:#a855f7; --alexander:#4ade80;
+    --leon:#3b82f6; --emre:#fbbf24; --julian:#f472b6; --octavian:#f97316;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow:hidden;width:100vw;height:100vh}
+
+/* ===== PRESENTATION ===== */
+#pres{width:100vw;height:100vh;position:relative;overflow:hidden}
+.slide{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    padding:30px 50px 52px;
+    opacity:0;pointer-events:none;
+    transform:translateX(60px);
+    transition:opacity .6s ease,transform .6s cubic-bezier(.4,0,.2,1);
+    background:var(--bg);overflow:hidden;
+}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0)}
+.slide.exit{opacity:0;transform:translateX(-60px)}
+
+/* dot grid bg */
+.slide::before{
+    content:'';position:absolute;inset:0;
+    background-image:radial-gradient(circle,rgba(255,255,255,0.055) 1px,transparent 1px);
+    background-size:36px 36px;z-index:0;pointer-events:none;
+}
+
+/* speaker accents */
+.slide[data-spk="tom"]      {--ac:var(--tom)}
+.slide[data-spk="bryan"]    {--ac:var(--bryan)}
+.slide[data-spk="alexander"]{--ac:var(--alexander)}
+.slide[data-spk="leon"]     {--ac:var(--leon)}
+.slide[data-spk="emre"]     {--ac:var(--emre)}
+.slide[data-spk="julian"]   {--ac:var(--julian)}
+.slide[data-spk="octavian"] {--ac:var(--octavian)}
+
+/* corner ambient glow */
+.slide::after{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 0% 0%,rgba(255,255,255,0.03) 0%,transparent 50%),
+               radial-gradient(ellipse at 100% 100%,rgba(168,85,247,0.04) 0%,transparent 50%);
+    z-index:1;pointer-events:none;
+}
+
+.slide-inner{position:relative;z-index:2;width:100%;max-width:1100px}
+
+/* ===== SPEAKER BADGE ===== */
+.spk-badge{
+    position:absolute;top:12px;right:12px;z-index:20;
+    display:flex;align-items:center;gap:7px;
+    padding:5px 14px;
+    background:rgba(0,0,0,0.55);
+    border:1px solid var(--ac);border-radius:30px;
+    font-family:'Space Mono',monospace;font-size:0.7rem;
+    color:var(--ac);letter-spacing:.08em;
+    backdrop-filter:blur(8px);
+    box-shadow:0 0 16px rgba(0,0,0,0.5),0 0 8px var(--ac);
+}
+.spk-badge .name{font-weight:700;font-size:0.78rem}
+
+/* ===== SCANLINE ===== */
+.scanline{
+    position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--ac,rgba(34,211,238,.5)),transparent);
+    animation:scan 6s linear infinite;z-index:3;pointer-events:none;
+}
+@keyframes scan{from{top:0}to{top:100%}}
+
+/* ===== TYPOGRAPHY ===== */
+.tag{
+    display:inline-block;padding:3px 12px;
+    background:rgba(255,255,255,0.04);border:1px solid var(--ac);
+    border-radius:20px;font-size:.66rem;font-family:'Space Mono',monospace;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--ac);margin-bottom:9px;
+}
+.h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4.2vw,3.8rem);line-height:1;letter-spacing:.03em;margin-bottom:3px}
+.h1 .ac{color:var(--ac)}
+.sub{font-family:'Fredoka',sans-serif;font-size:clamp(1rem,1.8vw,1.4rem);color:var(--muted);margin-bottom:12px}
+.divider{width:55px;height:3px;background:linear-gradient(90deg,var(--ac),transparent);border-radius:2px;margin:7px 0 13px}
+
+/* ===== LAYOUT ===== */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+/* ===== CARDS ===== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.ac-card{background:rgba(0,0,0,0.45);border:1px solid var(--ac);border-radius:12px;padding:14px 16px;box-shadow:0 0 20px rgba(0,0,0,.4),inset 0 0 16px rgba(0,0,0,.2)}
+
+/* ===== BULLETS ===== */
+.bullets{list-style:none;display:flex;flex-direction:column;gap:8px}
+.bullets li{display:flex;align-items:flex-start;gap:8px;font-size:.87rem;line-height:1.5;color:var(--muted)}
+.bullets li::before{content:'▸';color:var(--ac);font-size:.7rem;margin-top:3px;flex-shrink:0}
+.bullets li strong{color:white}
+
+/* ===== COST ROWS ===== */
+.costs{display:flex;flex-direction:column;gap:3px}
+.cr{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;border-radius:7px;background:rgba(255,255,255,0.02);font-size:.8rem}
+.cr.tot{background:rgba(0,0,0,.5);border:1px solid var(--ac);font-weight:600;margin-top:3px}
+.cr-l{color:var(--muted)}
+.cr-v{font-family:'Space Mono',monospace;font-weight:600}
+.green{color:#4ade80}.red{color:#f87171}.amber{color:#fbbf24}.blue{color:#3b82f6}.orange{color:#f97316}
+.ac-col{color:var(--ac)}
+
+/* ===== IMAGE FRAME ===== */
+.img-frame{border-radius:12px;overflow:hidden;border:2px solid rgba(255,255,255,0.09);position:relative}
+.img-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.img-cap{position:absolute;bottom:0;left:0;right:0;padding:5px 11px;background:rgba(0,0,0,.75);font-size:.68rem;font-family:'Space Mono',monospace;color:var(--ac);text-align:center;letter-spacing:.08em}
+
+/* ===== STEPS ===== */
+.steps{display:flex;flex-direction:column;gap:7px}
+.step{display:flex;gap:10px;align-items:center;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--ac);color:#000;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-t{font-size:.79rem;color:var(--muted);line-height:1.4}
+.step-t strong{color:white;display:block}
+
+/* ===== GEAR GRID ===== */
+.gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.gear{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--card);border:1px solid var(--border);border-radius:7px}
+.gear-n{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+.gear-p{font-family:'Space Mono',monospace;font-size:.76rem;color:var(--ac);font-weight:600}
+
+/* ===== TARGET CARDS ===== */
+.tc{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;transition:border-color .3s}
+.tc:hover{border-color:var(--ac)}
+.tc-title{font-family:'Fredoka',sans-serif;font-size:.95rem;color:var(--ac);margin-bottom:4px}
+.tc-desc{font-size:.76rem;color:var(--muted);line-height:1.5}
+
+/* ===== PRICE PKG ===== */
+.pkg{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;position:relative}
+.pkg.feat{border-color:var(--ac);background:rgba(0,0,0,.5)}
+.pkg.feat::before{content:'★ BELIEBT';position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--ac);color:#000;font-size:.58rem;font-weight:700;font-family:'Space Mono',monospace;padding:2px 9px;border-radius:9px;letter-spacing:.08em;white-space:nowrap}
+.pkg-name{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.pkg-val{font-family:'Bebas Neue',sans-serif;font-size:2.3rem;color:var(--ac);line-height:1}
+.pkg-desc{font-size:.7rem;color:var(--muted);margin-top:5px;line-height:1.4}
+
+/* ===== STAT BOX ===== */
+.stat{background:rgba(0,0,0,.45);border:1px solid var(--ac);border-radius:11px;padding:16px 12px;text-align:center}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--ac);line-height:1;text-shadow:0 0 14px var(--ac)}
+.stat-u{font-size:.65rem;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:.08em}
+.stat-d{font-size:.72rem;color:var(--muted);margin-top:4px;line-height:1.4}
+
+/* ===== CHANNEL ===== */
+.chan{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;background:var(--card);border:1px solid var(--border);border-radius:11px}
+.chan-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.chan-body h4{font-family:'Fredoka',sans-serif;font-size:.88rem;margin-bottom:2px}
+.chan-body p{font-size:.73rem;color:var(--muted);line-height:1.4}
+
+/* ===== BROWSER MOCK ===== */
+.browser{background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.1);border-radius:11px;overflow:hidden}
+.browser-bar{padding:7px 12px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:7px}
+.bdot{width:7px;height:7px;border-radius:50%}
+.burl{flex:1;background:rgba(255,255,255,.05);border-radius:5px;padding:3px 9px;font-size:.68rem;font-family:'Space Mono',monospace;color:var(--muted)}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp   {from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeLeft {from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeRight{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn  {from{opacity:0;transform:scale(.76)}to{opacity:1;transform:scale(1)}}
+@keyframes glow{0%,100%{text-shadow:0 0 20px var(--ac)}50%{text-shadow:0 0 40px var(--ac),0 0 70px var(--ac)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes borderPulse{0%,100%{box-shadow:0 0 6px rgba(0,0,0,.2)}50%{box-shadow:0 0 22px var(--ac)}}
+
+.slide.active .au{animation:fadeUp    .55s ease forwards}
+.slide.active .al{animation:fadeLeft  .55s ease forwards}
+.slide.active .ar{animation:fadeRight .55s ease forwards}
+.slide.active .as{animation:scaleIn   .45s ease forwards}
+
+.d1{animation-delay:.06s!important;opacity:0}
+.d2{animation-delay:.18s!important;opacity:0}
+.d3{animation-delay:.30s!important;opacity:0}
+.d4{animation-delay:.42s!important;opacity:0}
+.d5{animation-delay:.54s!important;opacity:0}
+.d6{animation-delay:.66s!important;opacity:0}
+.d7{animation-delay:.78s!important;opacity:0}
+
+/* ===== NAV BAR ===== */
+#nav{
+    position:fixed;bottom:0;left:0;right:0;z-index:100;
+    height:46px;background:linear-gradient(90deg,#00c4ff,#3b82f6,#8b5cf6);
+    display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+}
+#dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;transition:all .3s}
+.dot.on{background:white;width:20px;border-radius:3px}
+#counter{font-family:'Space Mono',monospace;font-size:.72rem;color:white;letter-spacing:.1em}
+#spk-label{font-family:'Fredoka',sans-serif;font-size:.92rem;color:white;opacity:.92}
+.nb{background:rgba(255,255,255,.14);border:none;color:white;width:31px;height:31px;border-radius:7px;cursor:pointer;font-size:.82rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.nb:hover{background:rgba(255,255,255,.28)}
+#ctrls{display:flex;gap:5px;align-items:center}
+
+/* ===== HINTS ===== */
+#hints{position:fixed;top:11px;left:11px;z-index:100;font-size:.63rem;font-family:'Space Mono',monospace;color:rgba(255,255,255,.22);pointer-events:none}
+.k{display:inline-block;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:3px;padding:1px 5px;margin:0 2px}
+
+/* ===== SLIDE 1 (title bg) ===== */
+.hero-bg{position:absolute;inset:0;z-index:1}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.18}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,5,8,.92) 0%,rgba(5,5,8,.65) 50%,rgba(5,5,8,.85) 100%)}
+.t1-main{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,8.5vw,8rem);line-height:.88;color:var(--ac);text-shadow:0 0 35px rgba(34,211,238,.4);animation:glow 3s ease infinite}
+.t1-sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5.5vw,5.2rem);line-height:.95;color:white}
+.t1-slogan{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-top:8px}
+.diamond-float{font-size:4rem;animation:float 3s ease infinite;display:block}
+.pill{padding:4px 13px;border-radius:18px;font-size:.72rem;font-weight:600;border:1px solid var(--ac);color:var(--ac);background:rgba(0,0,0,.4)}
+</style>
+</head>
+<body>
+
+<div id="hints"><span class="k">←</span><span class="k">→</span> navigieren &nbsp;|&nbsp; <span class="k">F</span> Vollbild</div>
+
+<div id="nav">
+    <div id="dots"></div>
+    <span id="spk-label">🎤 Tom</span>
+    <span id="counter">01 / 12</span>
+    <div id="ctrls">
+        <button class="nb" id="prev"><i class="fa fa-chevron-left"></i></button>
+        <button class="nb" id="next"><i class="fa fa-chevron-right"></i></button>
+    </div>
+</div>
+
+<div id="pres">
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 01 — TOM — TITELFOLIE
+════════════════════════════════════════════════════════════ -->
+<div class="slide active" id="s1" data-spk="tom" data-label="🎤 Tom – Einführung">
+    <div class="hero-bg"><img src="hero_bmw.jpg" alt="Premium Auto"></div>
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">TOM</span><span style="opacity:.6">|</span>Einführung</div>
+
+    <div class="slide-inner" style="position:relative;z-index:5">
+        <div class="two-col" style="align-items:center;gap:40px">
+            <div>
+                <div class="au d1"><span class="tag">Schulprojekt · Businessplan · Duisburg</span></div>
+                <div class="au d2">
+                    <span class="diamond-float">💎</span>
+                    <div class="t1-main">DIAMOND</div>
+                    <div class="t1-sub">DETAILING</div>
+                </div>
+                <div class="au d3"><div class="t1-slogan">DETAIL MACHT DEN UNTERSCHIED</div></div>
+                <div class="au d4" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+                    <span class="pill">🚗 Mobile Aufbereitung</span>
+                    <span class="pill">📍 Duisburg</span>
+                    <span class="pill">💎 Premium</span>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+                <div class="au d3 ac-card">
+                    <div style="font-size:.65rem;font-family:'Space Mono',monospace;color:var(--ac);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px">Unsere Geschäftsidee</div>
+                    <div style="font-family:'Fredoka',sans-serif;font-size:1.05rem">Mobile Autoaufbereitung</div>
+                </div>
+                <div class="au d4 ac-card">
+                    <div style="font-size:.65rem;font-family:'Space Mono',monospace;color:var(--ac);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px">Unser Vorteil</div>
+                    <div style="font-family:'Fredoka',sans-serif;font-size:1.05rem">Wir gehen zum Kunden!</div>
+                </div>
+                <div class="au d5 ac-card">
+                    <div style="font-size:.65rem;font-family:'Space Mono',monospace;color:var(--ac);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px">Sprecher-Reihenfolge</div>
+                    <div style="font-size:.72rem;color:var(--muted);line-height:1.8">Tom → Bryan → Alexander → Leon<br>→ Emre → Julian → Tom → Octavian → Emre</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 02 — TOM — GESCHÄFTSIDEE + DER UNTERSCHIED
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s2" data-spk="tom" data-label="🎤 Tom – Geschäftsidee">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">TOM</span><span style="opacity:.6">|</span>Geschäftsidee</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 02 · Der Unterschied</span>
+            <h2 class="h1">DER <span class="ac">UNTERSCHIED</span></h2>
+            <p class="sub">Wir gehen zum Kunden – der Kunde muss nicht zu uns!</p>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <ul class="bullets au d2">
+                    <li>Wir haben uns als Geschäftsidee eine <strong>mobile Autoaufbereitung</strong> überlegt</li>
+                    <li>Name: <strong>Diamond Detailing</strong> – Fahrzeuge professionell innen & außen reinigen</li>
+                    <li>Im Gegensatz zu normalen Waschanlagen <strong>fahren wir direkt zum Kunden</strong></li>
+                    <li>Kunden <strong>sparen Zeit</strong> – kein Extra-Trip zur Waschanlage nötig</li>
+                    <li>Unsere Konkurrenz: normale Waschanlagen, die keinen <strong>mobilen Service</strong> anbieten</li>
+                    <li>Besonders praktisch für <strong>Firmen oder Menschen mit wenig Zeit</strong></li>
+                </ul>
+                <div class="au d4" style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                    <div style="background:rgba(255,75,43,.06);border:1px solid rgba(255,75,43,.25);border-radius:10px;padding:12px;text-align:center">
+                        <div style="font-size:1.4rem;margin-bottom:4px">😤</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.88rem;color:#f87171">Normale Waschanlage</div>
+                        <div style="font-size:.7rem;color:var(--muted);margin-top:3px">Kunde muss selbst hinfahren</div>
+                    </div>
+                    <div style="background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.3);border-radius:10px;padding:12px;text-align:center">
+                        <div style="font-size:1.4rem;margin-bottom:4px">😊</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.88rem;color:var(--ac)">Diamond Detailing</div>
+                        <div style="font-size:.7rem;color:var(--muted);margin-top:3px">Wir kommen zum Kunden!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="au d3">
+                <div class="img-frame" style="height:290px">
+                    <img src="before.jpg" alt="Schmutziges Auto – das Problem" style="object-position:center">
+                    <div class="img-cap">⚠️ VORHER – ohne professionelle Aufbereitung</div>
+                </div>
+                <div class="au d5" style="margin-top:10px;padding:11px 14px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.25);border-radius:10px;text-align:center">
+                    <div style="font-size:1.5rem;font-family:'Fredoka',sans-serif;color:var(--ac)">WIR LÖSEN DIESES PROBLEM</div>
+                    <div style="font-size:.73rem;color:var(--muted);margin-top:2px">Mobil · Professionell · Direkt bei dir zuhause</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 03 — BRYAN — DIENSTLEISTUNGEN + ABLAUF
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s3" data-spk="bryan" data-label="🎤 Bryan – Dienstleistungen">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">BRYAN</span><span style="opacity:.6">|</span>Dienstleistungen</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 03 · Produkt & Dienstleistung</span>
+            <h2 class="h1">DIENST<span class="ac">LEISTUNGEN</span></h2>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <div class="three-col au d2" style="margin-bottom:12px">
+                    <div class="card" style="text-align:center;border-color:rgba(168,85,247,.3)">
+                        <div style="font-size:2rem;margin-bottom:8px">🛁</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.95rem;color:var(--ac);margin-bottom:4px">Innenreinigung</div>
+                        <div style="font-size:.72rem;color:var(--muted)">Saugen, Wischen, Polster, Desinfizieren</div>
+                    </div>
+                    <div class="card" style="text-align:center;border-color:rgba(168,85,247,.3)">
+                        <div style="font-size:2rem;margin-bottom:8px">🚿</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.95rem;color:var(--ac);margin-bottom:4px">Außenwäsche</div>
+                        <div style="font-size:.72rem;color:var(--muted)">Handwäsche, Felgen, Glas, Trocknung</div>
+                    </div>
+                    <div class="card" style="text-align:center;border-color:rgba(168,85,247,.3)">
+                        <div style="font-size:2rem;margin-bottom:8px">✨</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.95rem;color:var(--ac);margin-bottom:4px">Politur</div>
+                        <div style="font-size:.72rem;color:var(--muted)">Lackpolitur, Kratzer, Wachs, Schutz</div>
+                    </div>
+                </div>
+                <div class="au d4">
+                    <div class="img-frame" style="height:200px">
+                        <img src="after.jpg" alt="Sauberes Fahrzeug – Ergebnis">
+                        <div class="img-cap">✅ NACHHER – das Ergebnis unserer Arbeit</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.95rem;color:var(--ac);margin-bottom:8px" class="au d2">📋 Ablauf bei jedem Auftrag</div>
+                <div class="steps au d3">
+                    <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Termin vereinbaren</strong>WhatsApp, Website oder Telefon</div></div>
+                    <div class="step"><div class="step-n">2</div><div class="step-t"><strong>Anfahrt zum Kunden</strong>Wir kommen mit allem Equipment</div></div>
+                    <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Außen reinigen</strong>Hochdruckreiniger, Handwäsche, Felgen</div></div>
+                    <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Innen saugen & reinigen</strong>Nassauger, Dampfreiniger, Polster</div></div>
+                    <div class="step"><div class="step-n">5</div><div class="step-t"><strong>Polieren & Finish</strong>Lackpolitur, Wachs, letzter Check</div></div>
+                    <div class="step"><div class="step-n">6</div><div class="step-t"><strong>Übergabe & Zahlung</strong>Fotos, Kundenbewertung, Bezahlung</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 04 — BRYAN — GERÄTE + ANSCHAFFUNGSKOSTEN
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s4" data-spk="bryan" data-label="🎤 Bryan – Geräte & Kosten">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">BRYAN</span><span style="opacity:.6">|</span>Geräte & Kosten</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 04 · Erste Anschaffungskosten</span>
+            <h2 class="h1">GERÄTE & <span class="ac">ANSCHAFFUNG</span></h2>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px" class="au d1">🔧 Benötigte Geräte + Preise</div>
+                <div class="gear-grid au d2">
+                    <div class="gear"><div class="gear-n"><span>🔫</span>Hochdruckreiniger</div><div class="gear-p">~300€</div></div>
+                    <div class="gear"><div class="gear-n"><span>🌀</span>Industriestaubsauger</div><div class="gear-p">~200€</div></div>
+                    <div class="gear"><div class="gear-n"><span>⚙️</span>Poliermaschine</div><div class="gear-p">~150€</div></div>
+                    <div class="gear"><div class="gear-n"><span>🧽</span>Mikrofasertücher</div><div class="gear-p">~100€</div></div>
+                    <div class="gear"><div class="gear-n"><span>🖌️</span>Bürsten-Set</div><div class="gear-p">~50€</div></div>
+                    <div class="gear"><div class="gear-n"><span>🧴</span>Reinigungsmittel</div><div class="gear-p">~300€</div></div>
+                    <div class="gear"><div class="gear-n"><span>🪣</span>Wasserbehälter</div><div class="gear-p">~200€</div></div>
+                    <div class="gear" style="border-color:rgba(168,85,247,.4);background:rgba(168,85,247,.06)">
+                        <div class="gear-n" style="color:var(--ac);font-weight:600">📦 GESAMT</div>
+                        <div class="gear-p" style="font-size:.9rem">~1.300€</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="au d2" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">💡 Warum diese Geräte?</div>
+                <ul class="bullets au d3" style="margin-bottom:12px">
+                    <li><strong>Hochdruckreiniger</strong> – für gründliche Außenwäsche, auch ohne Wasseranschluss</li>
+                    <li><strong>Staubsauger</strong> – für Teppiche, Sitze und schwer erreichbare Stellen</li>
+                    <li><strong>Poliermaschine</strong> – für professionellen Lackglanz bei Polituraufträgen</li>
+                    <li><strong>Wasserbehälter</strong> – da wir mobil sind und keinen festen Wasseranschluss haben</li>
+                    <li><strong>Reinigungsmittel</strong> – Spezialprodukte für Leder, Kunststoff, Glas, Lack</li>
+                </ul>
+                <div class="au d4">
+                    <div class="img-frame" style="height:160px">
+                        <img src="after_interior.png" alt="Sauberer Innenraum" onerror="this.parentElement.style.display='none'">
+                        <div class="img-cap">✅ Professionelle Innenreinigung</div>
+                    </div>
+                </div>
+                <div class="au d5" style="margin-top:10px;padding:12px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;text-align:center">
+                    <div style="font-size:.65rem;color:var(--muted);font-family:'Space Mono',monospace">GERÄTE GESAMT</div>
+                    <div style="font-family:'Bebas Neue',sans-serif;font-size:2.3rem;color:var(--ac);line-height:1.1">~1.300 €</div>
+                    <div style="font-size:.68rem;color:var(--muted)">Vans und weitere Kosten → Leon erklärt mehr</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 05 — ALEXANDER — ZIELGRUPPE
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s5" data-spk="alexander" data-label="🎤 Alexander – Zielgruppe">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">ALEXANDER</span><span style="opacity:.6">|</span>Zielgruppe</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 05 · Zielgruppe</span>
+            <h2 class="h1">ZIEL<span class="ac">GRUPPE</span></h2>
+            <p class="sub">Wer braucht unseren Service – und warum?</p>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div style="display:flex;flex-direction:column;gap:9px">
+                <div class="tc au d2">
+                    <span style="font-size:2rem;flex-shrink:0">👔</span>
+                    <div>
+                        <div class="tc-title">Privatkunden</div>
+                        <div class="tc-desc">Berufstätige und Familien haben im Alltag keine Zeit, ihr Auto selbst gründlich zu reinigen. Sie profitieren vom mobilen Service direkt zu Hause oder bei der Arbeit.</div>
+                    </div>
+                </div>
+                <div class="tc au d3">
+                    <span style="font-size:2rem;flex-shrink:0">🏢</span>
+                    <div>
+                        <div class="tc-title">Firmenkunden (B2B)</div>
+                        <div class="tc-desc">Unternehmen brauchen saubere Fahrzeuge für ihr Image und ihre Mitarbeiter. Besonders im Duisburger Industriegebiet gibt es viele solche Firmen.</div>
+                    </div>
+                </div>
+                <div class="tc au d4" style="border-color:rgba(74,222,128,.3)">
+                    <span style="font-size:2rem;flex-shrink:0">👵</span>
+                    <div>
+                        <div class="tc-title" style="color:#4ade80">Ältere Menschen</div>
+                        <div class="tc-desc">Ältere Personen können oft nicht mehr selbst zur Waschanlage fahren. Sie profitieren besonders davon, dass wir direkt zu ihnen nach Hause kommen.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="au d3">
+                <div class="img-frame" style="height:285px">
+                    <img src="elderly_customer.png" alt="Ältere Kundin mit schmutzigem Auto" onerror="this.src='before.jpg'">
+                    <div class="img-cap">👵 Typische Kundin – wir kommen zu ihr nach Hause!</div>
+                </div>
+                <div class="au d5" style="margin-top:10px;padding:11px 14px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.25);border-radius:10px">
+                    <div style="font-size:.65rem;font-family:'Space Mono',monospace;color:#4ade80;margin-bottom:3px">MARKTERKENNTNIS</div>
+                    <div style="font-size:.8rem;color:var(--muted)">"Viele Menschen haben keine Zeit oder Möglichkeit, ihr Auto selbst gründlich zu reinigen."</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 06 — ALEXANDER — PREISE + UMSATZ
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s6" data-spk="alexander" data-label="🎤 Alexander – Preise & Umsatz">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">ALEXANDER</span><span style="opacity:.6">|</span>Preise & Umsatz</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 06 · Preise & Einnahmen</span>
+            <h2 class="h1">PREISE & <span class="ac">UMSATZ</span></h2>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:9px" class="au d1">💰 Unsere Preisstruktur</div>
+                <div class="three-col au d2">
+                    <div class="pkg">
+                        <div class="pkg-name">Außenwäsche</div>
+                        <div class="pkg-val">80€</div>
+                        <div class="pkg-desc">Handwäsche, Felgen, Trocknung</div>
+                    </div>
+                    <div class="pkg feat">
+                        <div class="pkg-name">Komplett</div>
+                        <div class="pkg-val">150€</div>
+                        <div class="pkg-desc">Innen + Außen, alles inklusive</div>
+                    </div>
+                    <div class="pkg">
+                        <div class="pkg-name">Premium</div>
+                        <div class="pkg-val">250€</div>
+                        <div class="pkg-desc">Lackpolitur + Vollaufbereitung</div>
+                    </div>
+                </div>
+                <div class="au d3" style="margin-top:13px">
+                    <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">📈 Umsatzplanung (realistisch)</div>
+                    <div class="costs">
+                        <div class="cr"><span class="cr-l">Privatkunden (Ø 20/Mo. × 115€)</span><span class="cr-v green">2.300 €</span></div>
+                        <div class="cr"><span class="cr-l">Firmenkunden (2 × 500€)</span><span class="cr-v green">1.000 €</span></div>
+                        <div class="cr"><span class="cr-l">Premium-Aufträge (Ø 3 × 250€)</span><span class="cr-v green">750 €</span></div>
+                        <div class="cr tot"><span class="cr-l">Monatlicher Umsatz (Ziel)</span><span class="cr-v ac-col">~4.050 €</span></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <ul class="bullets au d2" style="margin-bottom:14px">
+                    <li><strong>Langsam starten</strong> – realistisch planen, nicht überschätzen</li>
+                    <li>Firmen brauchen saubere Fahrzeuge für ihr <strong>Image</strong></li>
+                    <li>Ältere Menschen profitieren, da <strong>wir zu ihnen kommen</strong></li>
+                    <li>Empfehlungsprogramm: <strong>10% Rabatt</strong> für Weiterempfehlungen</li>
+                    <li>B2B-Verträge für <strong>stabile monatliche Einnahmen</strong></li>
+                </ul>
+                <div class="au d3" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                    <div class="stat">
+                        <div class="stat-n">48K</div>
+                        <div class="stat-u">€ / JAHR</div>
+                        <div class="stat-d">Jahresumsatz Ziel (Jahr 1)</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-n" style="font-size:2rem">Monat 4</div>
+                        <div class="stat-u">BREAK-EVEN</div>
+                        <div class="stat-d">Ab wann wir Gewinn machen</div>
+                    </div>
+                </div>
+                <div class="au d4" style="margin-top:10px">
+                    <div class="img-frame" style="height:140px">
+                        <img src="before_wheels_new.png" alt="Vorher Felgen" onerror="this.src='before.jpg'">
+                        <div class="img-cap">Vorher – Nachher: Der Unterschied ist deutlich sichtbar</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 07 — LEON — STANDORT + VANS + ENTWICKLUNG
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s7" data-spk="leon" data-label="🎤 Leon – Standort & Vans">
+    <div class="hero-bg"><img src="duisburg_bg.png" alt="Duisburg" style="opacity:.1"></div>
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">LEON</span><span style="opacity:.6">|</span>Standort & Vans</div>
+
+    <div class="slide-inner" style="position:relative;z-index:5">
+        <div class="au d1">
+            <span class="tag">Folie 07 · Standort & Fahrzeuge</span>
+            <h2 class="h1">STANDORT & <span class="ac">VANS</span> 📍</h2>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px" class="au d1">📍 Unser Standort – Duisburg</div>
+                <div style="display:flex;flex-direction:column;gap:7px" class="au d2">
+                    <div style="display:flex;gap:11px;align-items:flex-start;padding:9px 13px;background:var(--card);border:1px solid var(--border);border-radius:9px">
+                        <span style="font-size:1.3rem;flex-shrink:0">🏭</span>
+                        <div><div style="font-family:'Fredoka',sans-serif;font-size:.88rem;margin-bottom:2px">Duisburg Industriegebiet</div><div style="font-size:.72rem;color:var(--muted)">Hohe Dichte an Firmenkunden & Gewerbebetrieben</div></div>
+                    </div>
+                    <div style="display:flex;gap:11px;align-items:flex-start;padding:9px 13px;background:var(--card);border:1px solid var(--border);border-radius:9px">
+                        <span style="font-size:1.3rem;flex-shrink:0">🏢</span>
+                        <div><div style="font-family:'Fredoka',sans-serif;font-size:.88rem;margin-bottom:2px">Viele Firmen in der Nähe</div><div style="font-size:.72rem;color:var(--muted)">Firmenflotten als direkte B2B-Kunden</div></div>
+                    </div>
+                    <div style="display:flex;gap:11px;align-items:flex-start;padding:9px 13px;background:var(--card);border:1px solid var(--border);border-radius:9px">
+                        <span style="font-size:1.3rem;flex-shrink:0">🛣️</span>
+                        <div><div style="font-family:'Fredoka',sans-serif;font-size:.88rem;margin-bottom:2px">Gute Verkehrslage</div><div style="font-size:.72rem;color:var(--muted)">A3, A40, A57 – ganz NRW erreichbar</div></div>
+                    </div>
+                    <div style="display:flex;gap:11px;align-items:flex-start;padding:9px 13px;background:var(--card);border:1px solid var(--border);border-radius:9px">
+                        <span style="font-size:1.3rem;flex-shrink:0">🏙️</span>
+                        <div><div style="font-family:'Fredoka',sans-serif;font-size:.88rem;margin-bottom:2px">Zukunft: Fester Standort</div><div style="font-size:.72rem;color:var(--muted)">Langfristig eigene Waschanlage oder Werkstatt eröffnen</div></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px" class="au d2">🚐 Unsere Fahrzeuge (VW Transporter)</div>
+                <div class="au d3">
+                    <div class="img-frame" style="height:190px;background:rgba(255,255,255,.05)">
+                        <img src="diamond_vans.png" alt="Diamond Detailing Vans" style="object-fit:contain;padding:10px" onerror="this.style.display='none'">
+                        <div class="img-cap">🚐 Diamond Detailing – Mit unseren gebrandeten Vans zum Kunden</div>
+                    </div>
+                </div>
+                <div class="au d4" style="margin-top:10px">
+                    <div class="costs">
+                        <div class="cr"><span class="cr-l">🚐 Gebrauchte Vans (1–2 Stück)</span><span class="cr-v blue">8.000–12.000€</span></div>
+                        <div class="cr"><span class="cr-l">🔨 Umbau & Ausstattung</span><span class="cr-v blue">1.000–2.000€</span></div>
+                        <div class="cr tot"><span class="cr-l">Gesamt pro Van</span><span class="cr-v ac-col">~10.000–14.000€</span></div>
+                    </div>
+                </div>
+                <ul class="bullets au d5" style="margin-top:10px">
+                    <li><strong>Start:</strong> 1–2 Vans mobil fahren</li>
+                    <li><strong>Ausstattung:</strong> alle Geräte + Wasser passen rein</li>
+                    <li><strong>Expansion:</strong> mehr Vans bei mehr Kunden</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 08 — EMRE — LAUFENDE KOSTEN + VERSICHERUNGEN
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s8" data-spk="emre" data-label="🎤 Emre – Laufende Kosten">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">EMRE</span><span style="opacity:.6">|</span>Laufende Kosten</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 08 · Laufende Kosten & Versicherungen</span>
+            <h2 class="h1">LAUFENDE <span class="ac">KOSTEN</span></h2>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px" class="au d1">📅 Monatliche Kosten</div>
+                <div class="costs au d2">
+                    <div class="cr"><span class="cr-l">⛽ Spritkosten</span><span class="cr-v red">200–400 €</span></div>
+                    <div class="cr"><span class="cr-l">🧴 Reinigungsmittel (Nachkauf)</span><span class="cr-v red">100–200 €</span></div>
+                    <div class="cr"><span class="cr-l">📱 Social Media Werbung</span><span class="cr-v red">~100 €</span></div>
+                    <div class="cr tot"><span class="cr-l">Monatlich gesamt</span><span class="cr-v ac-col">~400–700 €</span></div>
+                </div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px;margin-top:13px" class="au d3">📆 Jährliche Kosten</div>
+                <div class="costs au d4">
+                    <div class="cr"><span class="cr-l">🔧 Wartung & Reparaturen</span><span class="cr-v red">500–1.000 €</span></div>
+                    <div class="cr"><span class="cr-l">🛡️ Fahrzeugversicherung</span><span class="cr-v red">1.000–2.000 €</span></div>
+                    <div class="cr"><span class="cr-l">🏢 Unternehmensversicherung</span><span class="cr-v red">500–1.000 €</span></div>
+                    <div class="cr tot"><span class="cr-l">Jährlich gesamt</span><span class="cr-v ac-col">~2.000–4.000 €</span></div>
+                </div>
+            </div>
+            <div>
+                <div class="au d2" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">🛡️ Wichtige Versicherungen</div>
+                <ul class="bullets au d3" style="margin-bottom:13px">
+                    <li><strong>Kfz-Versicherung</strong> – für jeden Van verpflichtend</li>
+                    <li><strong>Betriebshaftpflicht</strong> – falls am Kundenfahrzeug etwas passiert</li>
+                    <li><strong>Inhaltsversicherung</strong> – für unsere Geräte im Van</li>
+                    <li><strong>Rechtsschutz</strong> – bei Streitigkeiten mit Kunden</li>
+                </ul>
+                <div class="au d4 ac-card" style="margin-bottom:12px">
+                    <div style="font-size:.65rem;font-family:'Space Mono',monospace;color:var(--ac);margin-bottom:5px;text-transform:uppercase;letter-spacing:.1em">⚠️ Finanzpuffer wichtig!</div>
+                    <div style="font-family:'Fredoka',sans-serif;font-size:.95rem;margin-bottom:4px">Immer Rücklage einplanen!</div>
+                    <div style="font-size:.76rem;color:var(--muted);line-height:1.5">Für unerwartete Reparaturen oder langsame Monate empfehlen wir einen Puffer von mindestens <span style="color:var(--ac);font-weight:600">2.000–3.000€</span> auf dem Geschäftskonto.</div>
+                </div>
+                <div class="au d5" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                    <div class="stat"><div class="stat-n">700€</div><div class="stat-u">MAX./MONAT</div><div class="stat-d">Laufende Kosten</div></div>
+                    <div class="stat"><div class="stat-n">4.000€</div><div class="stat-u">MAX./JAHR</div><div class="stat-d">Versicherung + Wartung</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 09 — JULIAN — MARKETING + UMWELT + RECHT
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s9" data-spk="julian" data-label="🎤 Julian – Marketing & Recht">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">JULIAN</span><span style="opacity:.6">|</span>Marketing & Recht</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 09 · Marketing + Umwelt + Rechtliches</span>
+            <h2 class="h1">MARKETING & <span class="ac">REGELN</span></h2>
+            <div class="divider"></div>
+        </div>
+        <div class="three-col au d2">
+            <!-- MARKETING -->
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.88rem;color:var(--ac);margin-bottom:8px;text-align:center">📣 Marketing</div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                    <div class="chan">
+                        <div class="chan-ico" style="background:rgba(236,72,153,.14);color:#f472b6"><i class="fa-brands fa-instagram"></i></div>
+                        <div class="chan-body"><h4>Instagram & TikTok</h4><p>Vorher-Nachher Bilder und Reels posten, um Kunden zu gewinnen</p></div>
+                    </div>
+                    <div class="chan">
+                        <div class="chan-ico" style="background:rgba(59,130,246,.14);color:#3b82f6"><i class="fa-brands fa-google"></i></div>
+                        <div class="chan-body"><h4>Google My Business</h4><p>Lokale SEO, Bewertungen, kostenlose Sichtbarkeit in Duisburg</p></div>
+                    </div>
+                    <div class="chan">
+                        <div class="chan-ico" style="background:rgba(74,222,128,.14);color:#4ade80"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="chan-body"><h4>Empfehlungen</h4><p>10% Rabatt für Kunden, die uns weiterempfehlen</p></div>
+                    </div>
+                    <div style="padding:8px;background:rgba(244,114,182,.06);border:1px solid rgba(244,114,182,.2);border-radius:8px;text-align:center">
+                        <div style="font-size:.62rem;color:var(--muted);font-family:'Space Mono',monospace">MARKETING BUDGET</div>
+                        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--ac)">~100€ / Monat</div>
+                    </div>
+                </div>
+            </div>
+            <!-- UMWELT -->
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.88rem;color:#4ade80;margin-bottom:8px;text-align:center">🌿 Umwelt & Abwasser</div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                    <div class="card" style="border-color:rgba(74,222,128,.2)">
+                        <div style="font-size:1rem;margin-bottom:3px">🚫</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.83rem;color:#4ade80">Schmutzwasser-Regeln</div>
+                        <div style="font-size:.7rem;color:var(--muted);margin-top:2px">Schmutzwasser darf NICHT in die Umwelt gelangen!</div>
+                    </div>
+                    <div class="card" style="border-color:rgba(74,222,128,.2)">
+                        <div style="font-size:1rem;margin-bottom:3px">🟩</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.83rem;color:#4ade80">Auffangmatten (~400–800€)</div>
+                        <div style="font-size:.7rem;color:var(--muted);margin-top:2px">Spezialmatten sammeln das Schmutzwasser</div>
+                    </div>
+                    <div class="card" style="border-color:rgba(74,222,128,.2)">
+                        <div style="font-size:1rem;margin-bottom:3px">💧</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.83rem;color:#4ade80">Nasssauger (~250€)</div>
+                        <div style="font-size:.7rem;color:var(--muted);margin-top:2px">Wasser absaugen und fachgerecht entsorgen</div>
+                    </div>
+                    <div class="card" style="border-color:rgba(74,222,128,.2);font-size:.7rem;color:var(--muted)">
+                        Nur auf Asphalt/Beton arbeiten – nie auf Gras oder Erde!
+                    </div>
+                </div>
+            </div>
+            <!-- RECHT -->
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.88rem;color:#f97316;margin-bottom:8px;text-align:center">⚖️ Rechtliches</div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                    <div class="card" style="border-color:rgba(249,115,22,.2)">
+                        <div style="font-size:1rem;margin-bottom:3px">📋</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.83rem;color:#f97316">Gewerbeanmeldung (Pflicht!)</div>
+                        <div style="font-size:.7rem;color:var(--muted);margin-top:2px">Kosten: ca. 20–60€ beim Gewerbeamt</div>
+                    </div>
+                    <div class="card" style="border-color:rgba(249,115,22,.2)">
+                        <div style="font-size:1rem;margin-bottom:3px">🏛️</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.83rem;color:#f97316">Umweltamt klären</div>
+                        <div style="font-size:.7rem;color:var(--muted);margin-top:2px">Abwasserregeln mit der Stadt Duisburg abstimmen</div>
+                    </div>
+                    <div class="card" style="border-color:rgba(249,115,22,.2)">
+                        <div style="font-size:1rem;margin-bottom:3px">📜</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.83rem;color:#f97316">AGB & Haftung</div>
+                        <div style="font-size:.7rem;color:var(--muted);margin-top:2px">Schutz bei Schäden am Kundenfahrzeug</div>
+                    </div>
+                    <div class="card" style="border-color:rgba(249,115,22,.2);font-size:.7rem;color:var(--muted)">
+                        Datenschutz (DSGVO) für Kundendaten beachten!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 10 — TOM — WEBSITE
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s10" data-spk="tom" data-label="🎤 Tom – Website">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">TOM</span><span style="opacity:.6">|</span>Website</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 10 · Unsere Website</span>
+            <h2 class="h1">UNSERE <span class="ac">WEBSITE</span> 🌐</h2>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div class="au d2">
+                <div class="browser">
+                    <div class="browser-bar">
+                        <div class="bdot" style="background:#ff5f57"></div>
+                        <div class="bdot" style="background:#ffd05b"></div>
+                        <div class="bdot" style="background:#28ca41"></div>
+                        <div class="burl">🔒 diamond-detailing.de</div>
+                    </div>
+                    <div style="position:relative">
+                        <img src="hero_bmw.jpg" alt="Diamond Detailing Website" style="width:100%;height:220px;object-fit:cover;display:block;opacity:.8">
+                        <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,transparent 35%,rgba(5,5,8,.9));display:flex;align-items:flex-end;padding:12px">
+                            <div>
+                                <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--ac)">DIAMOND DETAILING</div>
+                                <div style="font-size:.72rem;color:var(--muted)">Premium mobile Fahrzeugaufbereitung in Duisburg</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="au d3" style="margin-top:10px;padding:11px 14px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.25);border-radius:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-size:.62rem;font-family:'Space Mono',monospace;color:var(--ac)">WEBSITE KOSTEN</div>
+                            <div style="font-size:.8rem;color:var(--muted);margin-top:2px">Domain + Hosting (jährlich)</div>
+                        </div>
+                        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--ac)">100–300€</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="au d2" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:8px">🌐 Was die Website bietet</div>
+                <ul class="bullets au d3" style="margin-bottom:14px">
+                    <li><strong>Startseite</strong> – Überblick über alle Dienstleistungen</li>
+                    <li><strong>Leistungen & Pakete</strong> – mit Preisen und Beschreibungen</li>
+                    <li><strong>Vorher-Nachher Galerie</strong> – Bilder unserer Arbeit</li>
+                    <li><strong>Team-Seite</strong> – wir stellen uns vor</li>
+                    <li><strong>Kontaktformular</strong> – Kunden können Termine anfragen</li>
+                    <li><strong>Mobile-optimiert</strong> – funktioniert auf allen Geräten</li>
+                </ul>
+                <div class="au d4" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                    <div class="card" style="text-align:center;border-color:rgba(34,211,238,.2);padding:12px">
+                        <div style="font-size:1.4rem">📱</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.82rem;color:var(--ac);margin-top:4px">Mobile-freundlich</div>
+                        <div style="font-size:.68rem;color:var(--muted)">Auf allen Geräten nutzbar</div>
+                    </div>
+                    <div class="card" style="text-align:center;border-color:rgba(34,211,238,.2);padding:12px">
+                        <div style="font-size:1.4rem">🔍</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.82rem;color:var(--ac);margin-top:4px">Google-optimiert</div>
+                        <div style="font-size:.68rem;color:var(--muted)">Bei lokaler Suche auffindbar</div>
+                    </div>
+                    <div class="card" style="text-align:center;border-color:rgba(34,211,238,.2);padding:12px">
+                        <div style="font-size:1.4rem">⭐</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.82rem;color:var(--ac);margin-top:4px">Bewertungen</div>
+                        <div style="font-size:.68rem;color:var(--muted)">Google Bewertungen sichtbar</div>
+                    </div>
+                    <div class="card" style="text-align:center;border-color:rgba(34,211,238,.2);padding:12px">
+                        <div style="font-size:1.4rem">💬</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.82rem;color:var(--ac);margin-top:4px">Online-Buchung</div>
+                        <div style="font-size:.68rem;color:var(--muted)">Einfache Terminvergabe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 11 — OCTAVIAN — RECHTSFORM + GmbH + STEUERN
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s11" data-spk="octavian" data-label="🎤 Octavian – Rechtsform & Steuern">
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">OCTAVIAN</span><span style="opacity:.6">|</span>Rechtsform & Steuern</div>
+
+    <div class="slide-inner">
+        <div class="au d1">
+            <span class="tag">Folie 11 · Rechtsform & GmbH</span>
+            <h2 class="h1">RECHTSFORM & <span class="ac">GmbH</span> ⚖️</h2>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <div class="au d1" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:8px">🏢 Welche Rechtsform?</div>
+                <div class="au d2" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+                    <div style="text-align:center;padding:12px 8px;background:rgba(249,115,22,.08);border:2px solid rgba(249,115,22,.4);border-radius:10px">
+                        <div style="font-size:1.5rem">🏢</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.9rem;color:var(--ac);margin:4px 0 2px">GmbH ✅</div>
+                        <div style="font-size:.66rem;color:var(--muted)">Unsere Wahl!</div>
+                    </div>
+                    <div style="text-align:center;padding:12px 8px;background:var(--card);border:1px solid var(--border);border-radius:10px;opacity:.45">
+                        <div style="font-size:1.5rem">📈</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.9rem;color:var(--muted);margin:4px 0 2px">AG</div>
+                        <div style="font-size:.66rem;color:var(--muted)">Zu groß für uns</div>
+                    </div>
+                    <div style="text-align:center;padding:12px 8px;background:var(--card);border:1px solid var(--border);border-radius:10px;opacity:.45">
+                        <div style="font-size:1.5rem">🤝</div>
+                        <div style="font-family:'Fredoka',sans-serif;font-size:.9rem;color:var(--muted);margin:4px 0 2px">KG</div>
+                        <div style="font-size:.66rem;color:var(--muted)">Zu riskant</div>
+                    </div>
+                </div>
+                <div class="au d3" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">💶 GmbH Gründungskosten</div>
+                <div class="costs au d4">
+                    <div class="cr"><span class="cr-l">📦 Stammkapital (Pflicht)</span><span class="cr-v orange">25.000 €</span></div>
+                    <div class="cr"><span class="cr-l">⚖️ Notar + Handelsregistereintrag</span><span class="cr-v orange">500–1.000 €</span></div>
+                    <div class="cr"><span class="cr-l">📊 Steuerberater (jährlich)</span><span class="cr-v orange">~500 €</span></div>
+                    <div class="cr tot"><span class="cr-l">Gründungskosten gesamt</span><span class="cr-v ac-col">~26.000–27.000 €</span></div>
+                </div>
+            </div>
+            <div>
+                <div class="au d2" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">✅ Vorteile der GmbH</div>
+                <ul class="bullets au d3" style="margin-bottom:13px">
+                    <li><strong>Haftungsbeschränkung</strong> – Haftung nur mit Firmenvermögen, nicht privatem</li>
+                    <li><strong>Seriösität</strong> – Kunden und Firmen vertrauen einer GmbH mehr</li>
+                    <li><strong>Klare Struktur</strong> – Gesellschaftervertrag regelt alles intern</li>
+                    <li><strong>Investorenfreundlich</strong> – einfacher externe Geldgeber zu finden</li>
+                </ul>
+                <div class="au d4" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">💰 Steuern</div>
+                <div class="costs au d5">
+                    <div class="cr"><span class="cr-l">Körperschaftsteuer</span><span class="cr-v orange">15% vom Gewinn</span></div>
+                    <div class="cr"><span class="cr-l">Gewerbesteuer (Duisburg)</span><span class="cr-v orange">~14% vom Gewinn</span></div>
+                    <div class="cr tot"><span class="cr-l">Steuerlast gesamt (ca.)</span><span class="cr-v ac-col">~30% vom Gewinn</span></div>
+                </div>
+                <div class="au d5" style="margin-top:10px;padding:11px 14px;background:rgba(249,115,22,.07);border:1px solid rgba(249,115,22,.25);border-radius:10px">
+                    <div style="font-size:.72rem;color:var(--muted);line-height:1.5">💡 Zusätzlich wäre ein <strong style="color:white">Steuerberater</strong> sinnvoll – er hilft uns, Steuern korrekt zu melden und spart oft mehr, als er kostet.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOLIE 12 — EMRE — FINANZIERUNG + FAZIT + ZUKUNFT
+════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s12" data-spk="emre" data-label="🎤 Emre – Fazit & Zukunft">
+    <div class="hero-bg"><img src="after.jpg" alt="Ergebnis" style="opacity:.1"></div>
+    <div class="scanline"></div>
+    <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">EMRE</span><span style="opacity:.6">|</span>Fazit & Zukunft</div>
+
+    <div class="slide-inner" style="position:relative;z-index:5">
+        <div class="au d1">
+            <span class="tag">Folie 12 · Finanzierung + Fazit + Zukunft</span>
+            <h2 class="h1">FINANZIERUNG & <span class="ac">FAZIT</span></h2>
+            <div class="divider"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px" class="au d1">💰 Gesamtkosten Überblick</div>
+                <div class="costs au d2">
+                    <div class="cr"><span class="cr-l">🔧 Geräte (Erstausstattung)</span><span class="cr-v amber">~1.300 €</span></div>
+                    <div class="cr"><span class="cr-l">🚐 1–2 Vans (gebraucht)</span><span class="cr-v amber">~10.000–14.000 €</span></div>
+                    <div class="cr"><span class="cr-l">📣 Marketing + Website</span><span class="cr-v amber">~500 €</span></div>
+                    <div class="cr"><span class="cr-l">⚖️ Gewerbeanmeldung + AGB</span><span class="cr-v amber">~100 €</span></div>
+                    <div class="cr"><span class="cr-l">🛡️ Versicherungen (Jahr 1)</span><span class="cr-v amber">~2.000 €</span></div>
+                    <div class="cr"><span class="cr-l">💧 Umwelt (Auffangmatten etc.)</span><span class="cr-v amber">~800 €</span></div>
+                    <div class="cr tot"><span class="cr-l">GESAMT ohne GmbH</span><span class="cr-v ac-col">~15.000–20.000 €</span></div>
+                    <div class="cr" style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.22);border-radius:8px;margin-top:3px"><span class="cr-l">+ GmbH-Gründung (optional)</span><span class="cr-v orange">+~26.000 €</span></div>
+                    <div class="cr tot" style="border-color:rgba(251,191,36,.5)"><span class="cr-l">GESAMT mit GmbH</span><span class="cr-v" style="color:var(--ac);font-size:.95rem">~40.000–50.000 €</span></div>
+                </div>
+            </div>
+            <div>
+                <div class="au d2" style="text-align:center;margin-bottom:12px">
+                    <div style="font-size:3rem;animation:float 3s ease infinite;display:inline-block">💎</div>
+                    <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--ac);line-height:1;margin-top:4px">DIAMOND<br>DETAILING</div>
+                </div>
+                <div class="au d3" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">🚀 Unsere Zukunftsvision</div>
+                <ul class="bullets au d4" style="margin-bottom:12px">
+                    <li><strong>Klein starten</strong> – Risiko gering halten, realistisch planen</li>
+                    <li><strong>Erste Kosten</strong> – ca. 15.000–20.000€ ohne GmbH</li>
+                    <li><strong>Mit GmbH</strong> – ca. 40.000–50.000€ Gesamtkosten</li>
+                    <li><strong>Wachsen</strong> – mehr Kunden, mehr Vans, mehr Mitarbeiter</li>
+                    <li><strong>Expansion</strong> – Essen, Düsseldorf, ganz NRW</li>
+                    <li><strong>Langfristig</strong> – fester Standort oder eigene Waschanlage</li>
+                </ul>
+                <div class="au d5 ac-card" style="text-align:center">
+                    <div style="font-family:'Fredoka',sans-serif;font-size:1.3rem;margin-bottom:4px">Vielen Dank für Ihre Aufmerksamkeit! 🙏</div>
+                    <div style="font-size:.82rem;color:var(--muted)">Fragen und Antworten <span style="color:var(--ac)">?</span></div>
+                    <div style="margin-top:8px;font-size:.68rem;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:.1em">DETAIL MACHT DEN UNTERSCHIED</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div><!-- end #pres -->
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const dotsEl=document.getElementById('dots');
+const counter=document.getElementById('counter');
+const spkLabel=document.getElementById('spk-label');
+let cur=0;
+const n=slides.length;
+
+for(let i=0;i<n;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' on':'');
+    d.onclick=()=>go(i);
+    dotsEl.appendChild(d);
+}
+
+function pad(x){return String(x+1).padStart(2,'0')}
+
+function go(idx){
+    if(idx<0||idx>=n||idx===cur)return;
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    setTimeout(()=>slides[cur].classList.remove('exit'),650);
+    cur=idx;
+    slides[cur].classList.add('active');
+    counter.textContent=pad(cur)+' / '+pad(n-1);
+    document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+    spkLabel.textContent=slides[cur].dataset.label||'';
+}
+
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('prev').onclick=()=>go(cur-1);
+
+document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(cur+1)}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(cur-1)}
+    else if(e.key.toLowerCase()==='f'){
+        if(!document.fullscreenElement)document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+    }
+});
+
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{
+    const dx=tx-e.changedTouches[0].clientX;
+    if(Math.abs(dx)>50)go(dx>0?cur+1:cur-1);
+});
+</script>
+</body>
+</html>
