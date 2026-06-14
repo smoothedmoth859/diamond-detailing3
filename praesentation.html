@@ -331,7 +331,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
     <div class="scanline"></div>
     <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">BRYAN</span><span style="opacity:.6">|</span>Dienstleistungen</div>
 
-    <div class="slide-inner">
+    <!-- Bryan Foto -->
+    <div style="position:absolute;top:14px;left:14px;z-index:20;display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.55);border:1px solid rgba(168,85,247,0.5);border-radius:40px;padding:5px 14px 5px 5px;backdrop-filter:blur(8px);box-shadow:0 0 18px rgba(168,85,247,0.25)">
+        <img src="bryan_photo.jpeg" alt="Bryan"
+            style="width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid #a855f7;filter:brightness(1.05) contrast(1.05);"
+            onerror="this.style.display='none'">
+        <span style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:#a855f7;font-weight:600">Bryan</span>
+    </div>
         <div class="au d1">
             <span class="tag">Folie 03 · Produkt & Dienstleistung</span>
             <h2 class="h1">DIENST<span class="ac">LEISTUNGEN</span></h2>
@@ -384,6 +390,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
 <div class="slide" id="s4" data-spk="bryan" data-label="🎤 Bryan – Geräte & Kosten">
     <div class="scanline"></div>
     <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">BRYAN</span><span style="opacity:.6">|</span>Geräte & Kosten</div>
+
+    <!-- Bryan Foto -->
+    <div style="position:absolute;top:14px;left:14px;z-index:20;display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.55);border:1px solid rgba(168,85,247,0.5);border-radius:40px;padding:5px 14px 5px 5px;backdrop-filter:blur(8px);box-shadow:0 0 18px rgba(168,85,247,0.25)">
+        <img src="bryan_photo.jpeg" alt="Bryan"
+            style="width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid #a855f7;filter:brightness(1.05) contrast(1.05);"
+            onerror="this.style.display='none'">
+        <span style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:#a855f7;font-weight:600">Bryan</span>
+    </div>
 
     <div class="slide-inner">
         <div class="au d1">
@@ -498,61 +512,67 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
             <h2 class="h1">PREISE & <span class="ac">UMSATZ</span></h2>
             <div class="divider"></div>
         </div>
-        <div class="two-col">
+
+        <!-- FAHRZEUGKLASSEN HEADER -->
+        <div class="au d2" style="display:grid;grid-template-columns:140px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px">
+            <div></div>
+            <div style="text-align:center;font-size:1.6rem">🚗<div style="font-size:.68rem;font-family:'Space Mono',monospace;color:var(--muted);margin-top:2px">Klein</div></div>
+            <div style="text-align:center;font-size:1.6rem">🚘<div style="font-size:.68rem;font-family:'Space Mono',monospace;color:var(--muted);margin-top:2px">Limousine</div></div>
+            <div style="text-align:center;font-size:1.6rem">🚙<div style="font-size:.68rem;font-family:'Space Mono',monospace;color:var(--muted);margin-top:2px">SUV / Groß</div></div>
+            <div style="text-align:center;font-size:1.6rem">🚐<div style="font-size:.68rem;font-family:'Space Mono',monospace;color:var(--muted);margin-top:2px">Van / Sprinter</div></div>
+        </div>
+
+        <!-- BASIC PAKET -->
+        <div class="au d3" style="display:grid;grid-template-columns:140px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;margin-bottom:6px">
             <div>
-                <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:9px" class="au d1">💰 Unsere Preisstruktur</div>
-                <div class="three-col au d2">
-                    <div class="pkg">
-                        <div class="pkg-name">Außenwäsche</div>
-                        <div class="pkg-val">80€</div>
-                        <div class="pkg-desc">Handwäsche, Felgen, Trocknung</div>
-                    </div>
-                    <div class="pkg feat">
-                        <div class="pkg-name">Komplett</div>
-                        <div class="pkg-val">150€</div>
-                        <div class="pkg-desc">Innen + Außen, alles inklusive</div>
-                    </div>
-                    <div class="pkg">
-                        <div class="pkg-name">Premium</div>
-                        <div class="pkg-val">250€</div>
-                        <div class="pkg-desc">Lackpolitur + Vollaufbereitung</div>
-                    </div>
-                </div>
-                <div class="au d3" style="margin-top:13px">
-                    <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">📈 Umsatzplanung (realistisch)</div>
-                    <div class="costs">
-                        <div class="cr"><span class="cr-l">Privatkunden (Ø 20/Mo. × 115€)</span><span class="cr-v green">2.300 €</span></div>
-                        <div class="cr"><span class="cr-l">Firmenkunden (2 × 500€)</span><span class="cr-v green">1.000 €</span></div>
-                        <div class="cr"><span class="cr-l">Premium-Aufträge (Ø 3 × 250€)</span><span class="cr-v green">750 €</span></div>
-                        <div class="cr tot"><span class="cr-l">Monatlicher Umsatz (Ziel)</span><span class="cr-v ac-col">~4.050 €</span></div>
-                    </div>
-                </div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.95rem;color:var(--ac)">Basic</div>
+                <div style="font-size:.65rem;color:var(--muted);line-height:1.4;margin-top:2px">Außenwäsche, Felgen, Innenreinigung, Saugen, Cockpit</div>
             </div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:white">150€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:white">220€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:white">250€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:white">280€</div>
+        </div>
+
+        <!-- SUPERIOR PAKET -->
+        <div class="au d4" style="display:grid;grid-template-columns:140px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;background:rgba(34,211,238,0.04);border:1px solid rgba(34,211,238,0.25);border-radius:10px;padding:10px 12px;margin-bottom:6px;position:relative">
+            <div style="position:absolute;top:-9px;left:14px;background:var(--ac);color:#000;font-size:.58rem;font-weight:700;font-family:'Space Mono',monospace;padding:2px 9px;border-radius:8px;letter-spacing:.08em">★ BELIEBT</div>
             <div>
-                <ul class="bullets au d2" style="margin-bottom:14px">
-                    <li><strong>Langsam starten</strong> – realistisch planen, nicht überschätzen</li>
-                    <li>Firmen brauchen saubere Fahrzeuge für ihr <strong>Image</strong></li>
-                    <li>Ältere Menschen profitieren, da <strong>wir zu ihnen kommen</strong></li>
-                    <li>Empfehlungsprogramm: <strong>10% Rabatt</strong> für Weiterempfehlungen</li>
-                    <li>B2B-Verträge für <strong>stabile monatliche Einnahmen</strong></li>
-                </ul>
-                <div class="au d3" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-                    <div class="stat">
-                        <div class="stat-n">48K</div>
-                        <div class="stat-u">€ / JAHR</div>
-                        <div class="stat-d">Jahresumsatz Ziel (Jahr 1)</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-n" style="font-size:2rem">Monat 4</div>
-                        <div class="stat-u">BREAK-EVEN</div>
-                        <div class="stat-d">Ab wann wir Gewinn machen</div>
-                    </div>
-                </div>
-                <div class="au d4" style="margin-top:10px">
-                    <div class="img-frame" style="height:140px">
-                        <img src="before_wheels_new.png" alt="Vorher Felgen" onerror="this.src='before.jpg'">
-                        <div class="img-cap">Vorher – Nachher: Der Unterschied ist deutlich sichtbar</div>
-                    </div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.95rem;color:var(--ac)">Superior</div>
+                <div style="font-size:.65rem;color:var(--muted);line-height:1.4;margin-top:2px">+ Flugrost, Teer, Felgenglanz, Polster, Himmel, Fußmatten</div>
+            </div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--ac)">290€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--ac)">350€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--ac)">440€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--ac)">490€</div>
+        </div>
+
+        <!-- PREMIUM PAKET -->
+        <div class="au d5" style="display:grid;grid-template-columns:140px 1fr 1fr 1fr 1fr;gap:6px;align-items:center;background:rgba(251,191,36,0.04);border:1px solid rgba(251,191,36,0.2);border-radius:10px;padding:10px 12px;margin-bottom:12px">
+            <div>
+                <div style="font-family:'Fredoka',sans-serif;font-size:.95rem;color:#fbbf24">Premium</div>
+                <div style="font-size:.65rem;color:var(--muted);line-height:1.4;margin-top:2px">+ Hochglanzpolitur, Versiegelung, Leder, Motorwäsche</div>
+            </div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:#fbbf24">390€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:#fbbf24">450€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:#fbbf24">540€</div>
+            <div style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:#fbbf24">590€</div>
+        </div>
+
+        <!-- UMSATZ ROW -->
+        <div class="au d6" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <div class="costs" style="grid-column:1/3">
+                <div style="font-family:'Fredoka',sans-serif;font-size:.85rem;color:var(--ac);margin-bottom:6px">📈 Umsatzplanung (realistisches Ziel nach Anlaufphase)</div>
+                <div class="cr"><span class="cr-l">Basic-Aufträge (Ø 8/Mo. × 200€)</span><span class="cr-v green">1.600 €</span></div>
+                <div class="cr"><span class="cr-l">Superior-Aufträge (Ø 4/Mo. × 380€)</span><span class="cr-v green">1.520 €</span></div>
+                <div class="cr"><span class="cr-l">Premium-Aufträge (Ø 1/Mo. × 470€)</span><span class="cr-v green">470 €</span></div>
+                <div class="cr tot"><span class="cr-l">Monatlicher Umsatz (Ziel Monat 6+)</span><span class="cr-v ac-col">~3.590 €</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="stat" style="flex:1"><div class="stat-n" style="font-size:1.6rem">Monat 1–3</div><div class="stat-u">AUFBAUPHASE</div><div class="stat-d">Erste Kunden gewinnen, Abläufe einüben</div></div>
+                <div style="padding:8px 10px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:8px;text-align:center">
+                    <div style="font-size:.62rem;font-family:'Space Mono',monospace;color:#4ade80">INDIVIDUELL</div>
+                    <div style="font-size:.76rem;color:var(--muted);margin-top:2px">Preis auf Anfrage je nach Umfang</div>
                 </div>
             </div>
         </div>
@@ -566,6 +586,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
     <div class="hero-bg"><img src="duisburg_bg.png" alt="Duisburg" style="opacity:.1"></div>
     <div class="scanline"></div>
     <div class="spk-badge"><i class="fa fa-microphone"></i><span class="name">LEON</span><span style="opacity:.6">|</span>Standort & Vans</div>
+
+    <!-- Leon Foto: oben links als floating card -->
+    <div style="position:absolute;top:14px;left:14px;z-index:20;display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.55);border:1px solid rgba(59,130,246,0.5);border-radius:40px;padding:5px 14px 5px 5px;backdrop-filter:blur(8px);box-shadow:0 0 18px rgba(59,130,246,0.25)">
+        <img src="leon_photo.jpeg" alt="Leon" onerror="this.style.display='none'"
+            style="width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid #3b82f6;filter:brightness(1.05) contrast(1.05);"
+            onerror="this.style.display='none'">
+        <span style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:#3b82f6;font-weight:600">Leon</span>
+    </div>
 
     <div class="slide-inner" style="position:relative;z-index:5">
         <div class="au d1">
@@ -598,9 +626,11 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
             <div>
                 <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px" class="au d2">🚐 Unsere Fahrzeuge (VW Transporter)</div>
                 <div class="au d3">
-                    <div class="img-frame" style="height:190px;background:rgba(255,255,255,.05)">
-                        <img src="diamond_vans.png" alt="Diamond Detailing Vans" style="object-fit:contain;padding:10px" onerror="this.style.display='none'">
-                        <div class="img-cap">🚐 Diamond Detailing – Mit unseren gebrandeten Vans zum Kunden</div>
+                    <div style="position:relative;border-radius:14px;overflow:hidden;background:transparent;border:1px solid rgba(59,130,246,0.3);box-shadow:0 0 30px rgba(59,130,246,0.2),0 0 60px rgba(34,211,238,0.08);padding:6px 10px 2px">
+                        <img src="diamond_vans.png" alt="Diamond Detailing Vans"
+                            style="width:100%;height:210px;object-fit:contain;display:block;mix-blend-mode:lighten;filter:drop-shadow(0 0 18px rgba(34,211,238,0.5)) drop-shadow(0 4px 24px rgba(59,130,246,0.4)) brightness(1.08) contrast(1.05);"
+                            onerror="this.parentElement.style.display='none'">
+                        <div style="position:absolute;bottom:0;left:0;right:0;padding:5px 12px;background:linear-gradient(to top,rgba(5,5,8,.85),transparent);font-size:.68rem;font-family:'Space Mono',monospace;color:#3b82f6;text-align:center;letter-spacing:.08em">🚐 DIAMOND DETAILING – DIREKT ZU DIR</div>
                     </div>
                 </div>
                 <div class="au d4" style="margin-top:10px">
@@ -921,14 +951,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
                 <div style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px" class="au d1">💰 Gesamtkosten Überblick</div>
                 <div class="costs au d2">
                     <div class="cr"><span class="cr-l">🔧 Geräte (Erstausstattung)</span><span class="cr-v amber">~1.300 €</span></div>
-                    <div class="cr"><span class="cr-l">🚐 1–2 Vans (gebraucht)</span><span class="cr-v amber">~10.000–14.000 €</span></div>
+                    <div class="cr"><span class="cr-l">🚐 1 Van gebraucht (Start)</span><span class="cr-v amber">~8.000–12.000 €</span></div>
+                    <div class="cr"><span class="cr-l">🔨 Van-Umbau & Ausstattung</span><span class="cr-v amber">~1.000–2.000 €</span></div>
                     <div class="cr"><span class="cr-l">📣 Marketing + Website</span><span class="cr-v amber">~500 €</span></div>
-                    <div class="cr"><span class="cr-l">⚖️ Gewerbeanmeldung + AGB</span><span class="cr-v amber">~100 €</span></div>
+                    <div class="cr"><span class="cr-l">⚖️ Gewerbeanmeldung</span><span class="cr-v amber">~20–60 €</span></div>
                     <div class="cr"><span class="cr-l">🛡️ Versicherungen (Jahr 1)</span><span class="cr-v amber">~2.000 €</span></div>
-                    <div class="cr"><span class="cr-l">💧 Umwelt (Auffangmatten etc.)</span><span class="cr-v amber">~800 €</span></div>
-                    <div class="cr tot"><span class="cr-l">GESAMT ohne GmbH</span><span class="cr-v ac-col">~15.000–20.000 €</span></div>
-                    <div class="cr" style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.22);border-radius:8px;margin-top:3px"><span class="cr-l">+ GmbH-Gründung (optional)</span><span class="cr-v orange">+~26.000 €</span></div>
-                    <div class="cr tot" style="border-color:rgba(251,191,36,.5)"><span class="cr-l">GESAMT mit GmbH</span><span class="cr-v" style="color:var(--ac);font-size:.95rem">~40.000–50.000 €</span></div>
+                    <div class="cr"><span class="cr-l">💧 Auffangmatten & Umwelt</span><span class="cr-v amber">~800 €</span></div>
+                    <div class="cr tot"><span class="cr-l">GESAMT zum Start</span><span class="cr-v ac-col">~13.600–18.600 €</span></div>
+                    <div class="cr" style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.22);border-radius:8px;margin-top:3px"><span class="cr-l">+ GmbH-Gründung (Zukunft, optional)</span><span class="cr-v orange">+~26.000 €</span></div>
                 </div>
             </div>
             <div>
@@ -938,12 +968,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
                 </div>
                 <div class="au d3" style="font-family:'Fredoka',sans-serif;font-size:.92rem;color:var(--ac);margin-bottom:7px">🚀 Unsere Zukunftsvision</div>
                 <ul class="bullets au d4" style="margin-bottom:12px">
-                    <li><strong>Klein starten</strong> – Risiko gering halten, realistisch planen</li>
-                    <li><strong>Erste Kosten</strong> – ca. 15.000–20.000€ ohne GmbH</li>
-                    <li><strong>Mit GmbH</strong> – ca. 40.000–50.000€ Gesamtkosten</li>
-                    <li><strong>Wachsen</strong> – mehr Kunden, mehr Vans, mehr Mitarbeiter</li>
-                    <li><strong>Expansion</strong> – Essen, Düsseldorf, ganz NRW</li>
-                    <li><strong>Langfristig</strong> – fester Standort oder eigene Waschanlage</li>
+                    <li><strong>Klein starten</strong> – mit 1 Van, realistisch wachsen</li>
+                    <li><strong>Startkapital</strong> – ca. 13.600–18.600 € zum Einstieg</li>
+                    <li><strong>Monat 1–3</strong> – erste Kunden gewinnen, Abläufe einspielen</li>
+                    <li><strong>Wachsen</strong> – mehr Aufträge, zweiter Van, Festkunden</li>
+                    <li><strong>Expansion</strong> – Duisburg, dann weiteres Ruhrgebiet</li>
+                    <li><strong>Langfristig</strong> – fester Standort oder GmbH-Gründung</li>
                 </ul>
                 <div class="au d5 ac-card" style="text-align:center">
                     <div style="font-family:'Fredoka',sans-serif;font-size:1.3rem;margin-bottom:4px">Vielen Dank für Ihre Aufmerksamkeit! 🙏</div>
